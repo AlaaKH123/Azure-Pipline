@@ -6,9 +6,9 @@ Azure Kubernetes Service servira de plateforme de déploiement, offrant une orch
 
 Ce projet s'inscrit dans une approche moderne du développement logiciel, visant à accélérer les cycles de livraison, améliorer la qualité du code et garantir une expérience utilisateur stable grâce à des déploiements automatisés et une infrastructure hautement évolutive sur Azure.
 
-![Texte alternatif](C:\Users\USER\Desktop\pip 1.PNG)
-![Texte alternatif](C:\Users\USER\Desktop\pip 2.PNG)
-![Texte alternatif](C:\Users\USER\Desktop\pip 3.PNG)
+(C:\Users\USER\Desktop\pip 1.PNG)
+(C:\Users\USER\Desktop\pip 2.PNG)
+(C:\Users\USER\Desktop\pip 3.PNG)
 
 
 
