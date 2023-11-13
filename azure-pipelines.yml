@@ -39,6 +39,8 @@ stages:
   dependsOn: Build
   variables:
    acrsecret: K8sexampleacrauth
+   acrdevurl: 'AzureDevopsProject.azurecr.io'
+
   jobs:
     - deployment: Deploy
       displayName: Deploy to kubernetes
@@ -67,5 +69,6 @@ stages:
               action: 'deploy'
               namespace: 'default'
               manifests:
-                $(Pipeline.Workspace)/manifests/deployment.yaml
-                $(Pipeline.Workspace)/manifests/service.yaml
+               $(Pipeline.Workspace)/manifests/deployment.yaml 
+               $(Pipeline.Workspace)/manifests/service.yaml'
+              containers: '$(acrdevurl)/$(imageRepo): $(tag)'
