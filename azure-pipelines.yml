@@ -40,31 +40,32 @@ stages:
   variables:
    acrsecret: K8sexampleacrauth
   jobs:
-    - job: Deploy
+    - deployment: Deploy
       displayName: Deploy to kubernetes
+      environment: 'k8sdev.default'
       pool:
         vmImage: ubuntu-latest
-      steps:
-      - task: DownloadPipelineArtifact@2
-        inputs:
-          buildType: 'current'
-          artifactName: 'manifests'
-          targetPath: '$(Pipeline.Workspace)/manifests'
-      - task: KubernetesManifest@1
-        inputs:
-          action: 'createSecret'
-          connectionType: 'kubernetesServiceConnection'
-          kubernetesServiceConnection: 'KubernetesConnexion'
-          namespace: 'default'
-          secretType: 'dockerRegistry'
-          secretName: '$(acrsecret)'
-          dockerRegistryEndpoint: 'Docker-Connexion'
-      - task: KubernetesManifest@1
-        inputs:
-          action: 'deploy'
-          connectionType: 'kubernetesServiceConnection'
-          kubernetesServiceConnection: 'KubernetesConnexion'
-          namespace: 'default'
-          manifests:
-            $(Pipeline.Workspace)/manifests/deployment.yaml
-            $(Pipeline.Workspace)/manifests/service.yaml
+      strategy:
+       runOnce:
+         deploy:
+           
+          steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'manifests'
+              targetPath: '$(Pipeline.Workspace)/manifests'
+          - task: KubernetesManifest@1
+            inputs:
+              action: 'createSecret'
+              namespace: 'default'
+              secretType: 'dockerRegistry'
+              secretName: '$(acrsecret)'
+              dockerRegistryEndpoint: 'Docker-Connexion'
+          - task: KubernetesManifest@1
+            inputs:
+              action: 'deploy'
+              namespace: 'default'
+              manifests:
+                $(Pipeline.Workspace)/manifests/deployment.yaml
+                $(Pipeline.Workspace)/manifests/service.yaml
